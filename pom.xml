@@ -1,0 +1,179 @@
+
+<!-- ==========================================================================  -->
+<!-- Copyright © 2015-2019 Cristiano Gavião, C8 Technology ME.                         -->
+<!--                                                                             -->
+<!-- All rights reserved. This program and the accompanying materials            -->
+<!-- are made available under the terms of the Eclipse Public License v1.0       -->
+<!-- which accompanies this distribution, and is available at                    -->
+<!-- http://www.eclipse.org/legal/epl-v10.html                                   -->
+<!--                                                                             -->
+<!-- Contributors:                                                               -->
+<!-- Cristiano Gavião (cvgaviao@c8tech.com.br)- initial API and implementation   -->
+<!-- ==========================================================================  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>br.com.c8tech.releng</groupId>
+        <artifactId>maven-parent-osgi</artifactId>
+        <version>6.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>br.com.c8tech.vxosgi</groupId>
+    <artifactId>c8tech-vxosgi-pom</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
+    <name>C8Tech VxOSGi - POM Project</name>
+    <description>An OSGi and Vert.x based framework.</description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <c8tech.releng.version>6.1-SNAPSHOT</c8tech.releng.version>
+        <vxosgi.version>0.1.1-SNAPSHOT</vxosgi.version>
+            <!-- the current version of releng POMs used by children projects. -->
+        <!-- must be equal to this project version -->
+
+        <license.copyrightOwners>Cristiano Gavião, C8 Technology ME</license.copyrightOwners>
+        <c8tech.scm.repo.name>c8tech-vxosgi</c8tech.scm.repo.name>
+        <!--<vertx.version>4.0.0-SNAPSHOT</vertx.version>-->
+        <vertx.version>3.7.0</vertx.version>
+    </properties>
+
+    <!-- Due a maven limitation, this MUST be replicated to all children -->
+    <url>${c8tech.project.site.url}</url>
+    <scm>
+        <connection>${c8tech.scm.connection}</connection>
+        <developerConnection>${c8tech.scm.connection.dev}</developerConnection>
+        <url>${c8tech.scm.url}</url>
+        <tag>HEAD</tag>
+    </scm>
+    <distributionManagement>
+        <site>
+            <id>${c8tech.distribution.site.id}</id>
+            <name>${c8tech.distribution.site.name}</name>
+            <url>${c8tech.distribution.site.url}</url>
+        </site>
+    </distributionManagement>
+    <!-- end of per child setting -->
+
+
+    <modules>
+        <module>br.com.c8tech.vxosgi.lib</module>
+        <module>br.com.c8tech.vxosgi.api</module>
+        <module>br.com.c8tech.vxosgi.spi</module>
+        <module>br.com.c8tech.vxosgi.lib.paxexam</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>br.com.c8tech.tools</groupId>
+                    <artifactId>osgi-repository-maven-plugin</artifactId>
+                    <version>0.6.1-SNAPSHOT</version>
+                    <extensions>true</extensions>
+                </plugin>
+                <plugin>
+                    <groupId>br.com.c8tech.tools</groupId>
+                    <artifactId>osgi-subsystem-maven-plugin</artifactId>
+                    <version>0.6.1-SNAPSHOT</version>
+                    <extensions>true</extensions>
+                </plugin>
+                <plugin>
+                    <groupId>br.com.c8tech.tools</groupId>
+                    <artifactId>osgi-container-maven-plugin</artifactId>
+                    <version>0.6.2</version>
+                    <extensions>true</extensions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>br.com.c8tech.releng</groupId>
+                <artifactId>fpom-deps-osgi</artifactId>
+                <version>${c8tech.releng.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>br.com.c8tech.releng</groupId>
+                <artifactId>fpom-deps-felix</artifactId>
+                <version>${c8tech.releng.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+
+        <profile>
+            <id>build.subsystems</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>build.repositories</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <modules>
+                <module>c8tech-vxosgi-repository</module>
+                <module>c8tech-vxosgi-eclipse-target-platform</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>addon-vertx</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <modules>
+                <module>br.com.c8tech.vxosgi.addon.vertx</module>
+                <module>br.com.c8tech.vxosgi.addon.vertx.esa</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>bundles</id>
+            <activation>
+                <file>
+                    <exists>.c8tech.releng.bundle</exists>
+                </file>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>br.com.c8tech.releng</groupId>
+                        <artifactId>fpom-deps-osgi</artifactId>
+                        <version>${c8tech.releng.version}</version>
+                        <scope>import</scope>
+                        <type>pom</type>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+<!--             <build> -->
+<!--                 <pluginManagement> -->
+<!--                     <plugins> -->
+<!--                         <plugin> -->
+<!--                             <groupId>org.apache.felix</groupId> -->
+<!--                             <artifactId>maven-bundle-plugin</artifactId> -->
+<!--                             <configuration> -->
+<!--                                 <instructions> -->
+<!--                                 </instructions> -->
+<!--                             </configuration> -->
+<!--                         </plugin> -->
+<!--                     </plugins> -->
+<!--                 </pluginManagement> -->
+<!--             </build> -->
+        </profile>
+    </profiles>
+</project>

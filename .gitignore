@@ -1,0 +1,15 @@
+bin/
+.*.jar
+**/xtend-gen
+**/src-gen
+.DS_Store
+target
+.classpath
+.settings
+src-gen/
+xtend-gen/
+plugin.xml_gen
+.project
+META-INF/
+OSGI-INF/
+license-header-epl-v10.txt
