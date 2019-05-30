@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==========================================================================  -->
+<!-- Copyright © 2015-2019 Cristiano Gavião, C8 Technology ME.                         -->
+<!--                                                                             -->
+<!-- All rights reserved. This program and the accompanying materials            -->
+<!-- are made available under the terms of the Eclipse Public License v1.0       -->
+<!-- which accompanies this distribution, and is available at                    -->
+<!-- http://www.eclipse.org/legal/epl-v10.html                                   -->
+<!--                                                                             -->
+<!-- Contributors:                                                               -->
+<!-- Cristiano Gavião (cvgaviao@c8tech.com.br)- initial API and implementation   -->
+<!-- ==========================================================================  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>br.com.c8tech.vxosgi</groupId>
+        <artifactId>c8tech-vxosgi-pom</artifactId>
+        <version>0.1.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>br.com.c8tech.vxosgi.lib</artifactId>
+    <name>C8Tech VxOSGi Bundle - Base Library</name>
+    <description>This bundle provides common classes and utilities for
+        OSGi based projects.</description>
+
+    <properties>
+    </properties>
+
+    <!-- Due a maven limitation, this MUST be replicated to all children -->
+    <url>${c8tech.project.site.url}</url>
+    <scm>
+        <connection>${c8tech.scm.connection}</connection>
+        <developerConnection>${c8tech.scm.connection.dev}</developerConnection>
+        <url>${c8tech.scm.url}</url>
+        <tag>HEAD</tag>
+    </scm>
+    <distributionManagement>
+        <site>
+            <id>${c8tech.distribution.site.id}</id>
+            <name>${c8tech.distribution.site.name}</name>
+            <url>${c8tech.distribution.site.url}</url>
+        </site>
+    </distributionManagement>
+    <!-- end of per child setting -->
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.jsr305</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jool</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-json_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.johnzon</groupId>
+            <artifactId>johnzon-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.converter</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.repository</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${version.maven-bundle}</version>
+                    <configuration>
+                        <instructions>
+                            <Export-Package>
+                                br.com.c8tech.vxosgi.lib,
+                                br.com.c8tech.vxosgi.lib.*
+                            </Export-Package>
+                        </instructions>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
